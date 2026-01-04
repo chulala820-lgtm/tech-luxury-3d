@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  api:
+    build: ./backend
+    ports:
+      - "4000:4000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
+  web:
+    build: .
+    # This repo is frontend only; in production you'd build and serve the dist
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
